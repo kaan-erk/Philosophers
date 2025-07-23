@@ -8,7 +8,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 UTILS =	utils/utils.c
 
+PARSE = parse/parse.c
+
 SRCS =	$(UTILS) \
+		$(PARSE) \
 		main.c
 
 OBJS = $(SRCS:.c=.o)

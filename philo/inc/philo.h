@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/07/23 15:45:20 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:56:49 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef struct	s_table
 
 //utils utils.c
 void			ft_putendl_fd(char *s, int fd);
+int				ft_isalpha(int a);
 long long		ft_atoll(const char *str);
+//parse parse.c
+int				parse(char **av);
 
 #endif
