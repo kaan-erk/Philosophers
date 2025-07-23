@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/07/23 17:22:25 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:24:02 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@
 #include <unistd.h>
 #include <limits.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 typedef struct	s_table
 {
-	int				nuber_of_philosophers;
+	int				number_of_philosophers;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				dead_flag;
 	int				meal_goal;
+	pthread_mutex_t	print_lock;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philos;
 }				t_table;
@@ -46,6 +48,6 @@ void			ft_putendl_fd(char *s, int fd);
 int				ft_isalpha(int a);
 long long		ft_atoll(const char *str);
 //parse parse.c
-int				parse(char **av);
+int				parse(char **av, t_table *table);
 
 #endif
