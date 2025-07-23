@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:56:07 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/07/23 17:14:15 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:22:50 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int	parse(char **av)
 {
 	if (parse_table_error(av))
 		return (1);
-	//parse table
+	parse_table(av);
 	return (0);
 }
