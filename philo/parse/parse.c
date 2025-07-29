@@ -46,7 +46,7 @@ int table_error(char **av)
 		return (ft_putendl_fd("Invalid integer for time to sleep", 2), 1);
 	if (av[5])
 	{
-		if (!(ft_atoll(av[5]) < INT_MAX && ft_atoll(av[5]) > -1))	
+		if (!(ft_atoll(av[5]) < INT_MAX && ft_atoll(av[5]) > 0))	
 			return (ft_putendl_fd("Invalid integer for meal goal", 2), 1);
 	}
 	return (0);
