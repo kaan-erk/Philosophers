@@ -62,7 +62,7 @@ int	init_philo(t_table *table)
 	i = 0;
 	while (i < table->number_of_philosophers)
 	{
-		table->philos[i].id = i;
+		table->philos[i].id = i + 1;
 		table->philos[i].meals_eaten = 0;
 		table->philos[i].last_meal = 0;
 		table->philos[i].table = table;

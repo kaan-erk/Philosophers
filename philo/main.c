@@ -19,9 +19,14 @@ int main(int ac, char **av)
 	if (ac == 5 || ac == 6)
 	{
 		if (parse(av, &table))
+		{
+			//free
 			return (1);
+		}
+		execute(&table);
 	}
 	else
 		write(2, "Invalid number of args\n", 24);
+	//free
 	return (0);
 }

@@ -44,10 +44,12 @@ typedef struct	s_philo
 }				t_philo;
 
 //utils utils.c
-void			ft_putendl_fd(char *s, int fd);
-int				ft_isalpha(int a);
-long long		ft_atoll(const char *str);
+void		ft_putendl_fd(char *s, int fd);
+int			ft_isalpha(int a);
+long long	ft_atoll(const char *str);
 //parse parse.c
 int				parse(char **av, t_table *table);
+//execute execute.c
+int			execute(t_table *table);
 
 #endif

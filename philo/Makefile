@@ -10,8 +10,11 @@ UTILS =	utils/utils.c
 
 PARSE = parse/parse.c
 
+EXECUTE = execute/execute.c
+
 SRCS =	$(UTILS) \
 		$(PARSE) \
+		$(EXECUTE) \
 		main.c
 
 OBJS = $(SRCS:.c=.o)
