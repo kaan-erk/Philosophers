@@ -18,6 +18,7 @@
 #include <limits.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 typedef struct	s_table
 {
@@ -25,6 +26,7 @@ typedef struct	s_table
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			start_time;
 	int				dead_flag;
 	int				meal_goal;
 	pthread_mutex_t	print_lock;
@@ -47,9 +49,14 @@ typedef struct	s_philo
 void		ft_putendl_fd(char *s, int fd);
 int			ft_isalpha(int a);
 long long	ft_atoll(const char *str);
+void		print_status(t_philo *philo, char *msg);
+long		get_time(void);
 //parse parse.c
 int				parse(char **av, t_table *table);
 //execute execute.c
 int			execute(t_table *table);
+//execute execute_utils.c
+int			is_dead(t_table *table);
+void		set_dead(t_table *table);
 
 #endif

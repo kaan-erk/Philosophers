@@ -1,9 +1,13 @@
 #include "../inc/philo.h"
 
-void *thread_test(void *arg)
+void *life_cycle(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
-    printf("Philo id: %d: %s\n", philo->id, "Hello");
+    
+    while (is_dead(philo->table))
+    {
+        
+    }
     return (NULL);
 }
 
@@ -14,7 +18,12 @@ int execute(t_table *table)
     i = 0;
     while (i < table->number_of_philosophers)
     {
-        pthread_create(&table->philos[i].thread, NULL, thread_test, (void *)&table->philos[i]);
+        pthread_create(&table->philos[i].thread, NULL, life_cycle, (void *)&table->philos[i]);
+        i++;
+    }
+    i = 0;
+    while (i < table->number_of_philosophers)
+    {
         pthread_join(table->philos[i].thread, NULL);
         i++;
     }

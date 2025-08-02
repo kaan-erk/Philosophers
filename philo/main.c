@@ -16,6 +16,7 @@ int main(int ac, char **av)
 {
 	t_table	table;
 
+	table.start_time = get_time();
 	if (ac == 5 || ac == 6)
 	{
 		if (parse(av, &table))

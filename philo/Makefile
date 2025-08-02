@@ -1,6 +1,6 @@
 NAME = philo
 
-CC = cc -g
+CC = cc
 
 RM = rm -f
 
@@ -10,7 +10,8 @@ UTILS =	utils/utils.c
 
 PARSE = parse/parse.c
 
-EXECUTE = execute/execute.c
+EXECUTE =	execute/execute.c \
+			execute/execute_utils.c
 
 SRCS =	$(UTILS) \
 		$(PARSE) \
