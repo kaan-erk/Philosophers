@@ -64,7 +64,7 @@ int	init_philo(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].meals_eaten = 0;
-		table->philos[i].last_meal = 0;
+		table->philos[i].last_meal = table->start_time;
 		table->philos[i].table = table;
 		table->philos[i].left_fork = &table->forks[i];
 		table->philos[i].right_fork = &table->forks[(i + 1) % table->number_of_philosophers];
@@ -87,6 +87,7 @@ int	init_table_n_philo(char **av, t_table *table)
 		table->meal_goal = -1;
 	table->dead_flag = 0;
 	pthread_mutex_init(&table->print_lock, NULL);
+	pthread_mutex_init(&table->dead_lock, NULL);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->number_of_philosophers);
 	if (!table->forks)
 		return (1);

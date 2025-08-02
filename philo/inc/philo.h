@@ -30,6 +30,7 @@ typedef struct	s_table
 	int				dead_flag;
 	int				meal_goal;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philos;
 }				t_table;
