@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 18:55:14 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:40:15 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct	s_philo
 	int				id;
 	int				meals_eaten;
 	long			last_meal;
+	int has_left_fork;
+    int has_right_fork;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
