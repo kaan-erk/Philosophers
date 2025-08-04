@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/07/23 18:24:02 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:55:14 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_table
 	int				dead_flag;
 	int				meal_goal;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philos;
@@ -57,6 +58,7 @@ int				parse(char **av, t_table *table);
 //execute execute.c
 int			execute(t_table *table);
 //execute execute_utils.c
+int			get_dead_flag(t_table *table);
 int			is_dead(t_table *table);
 void		set_dead(t_table *table);
 

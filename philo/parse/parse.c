@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 16:56:07 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/07/23 18:49:46 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:06:37 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	init_table_n_philo(char **av, t_table *table)
 	table->dead_flag = 0;
 	pthread_mutex_init(&table->print_lock, NULL);
 	pthread_mutex_init(&table->dead_lock, NULL);
+	pthread_mutex_init(&table->meal_lock, NULL);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->number_of_philosophers);
 	if (!table->forks)
 		return (1);

@@ -16,3 +16,12 @@ void	set_dead(t_table *table)
 	table->dead_flag = 1;
 	pthread_mutex_unlock(&table->dead_lock);
 }
+
+int get_dead_flag(t_table *table)
+{
+    int flag;
+    pthread_mutex_lock(&table->dead_lock);
+    flag = table->dead_flag;
+    pthread_mutex_unlock(&table->dead_lock);
+    return flag;
+}
