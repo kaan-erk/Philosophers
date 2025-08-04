@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 20:28:14 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:43:18 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,13 @@ typedef struct s_philo
 	t_table			*table;
 }					t_philo;
 
-// utils utils.c
 void				ft_putendl_fd(char *s, int fd);
 int					ft_isdigit(int a);
 long long			ft_atoll(const char *str);
 void				print_status(t_philo *philo, char *msg);
 long				get_time(void);
-// parse parse.c
 int					parse(char **av, t_table *table);
-// execute execute.c
 int					execute(t_table *table);
-// execute execute_utils.c
 int					get_dead_flag(t_table *table);
 int					is_dead(t_table *table);
 void				sleep_philo(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 20:27:35 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 20:39:49 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:43:04 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	*life_cycle(void *arg)
 	}
 	while (!is_dead(philo->table))
 	{
-		// print_status(philo, "is thinking");
 		take_forks(philo);
 		eat(philo);
 		drop_forks(philo);
