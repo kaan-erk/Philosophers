@@ -1,159 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 20:25:30 by ktoraman          #+#    #+#             */
+/*   Updated: 2025/08/04 20:34:06 by ktoraman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
 
-void drop_forks(t_philo *philo)
+static void	init_philosophers(t_table *table)
 {
-	if (philo->has_left_fork)
+	int	i;
+
+	table->start_time = get_time();
+	pthread_mutex_lock(&table->meal_lock);
+	i = 0;
+	while (i < table->number_of_philosophers)
 	{
-		pthread_mutex_unlock(philo->left_fork);
-		philo->has_left_fork = 0;
+		table->philos[i].last_meal = table->start_time;
+		i++;
 	}
-	if (philo->has_right_fork)
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		philo->has_right_fork = 0;
-	}
-}
-void take_forks(t_philo *philo)
-{
-    if (philo->id % 2 == 0)
-    {
-        pthread_mutex_lock(philo->left_fork);
-        philo->has_left_fork = 1;
-        print_status(philo, "has taken a fork");
-        if (is_dead(philo->table))
-        {
-            drop_forks(philo);
-            return;
-        }
-        pthread_mutex_lock(philo->right_fork);
-        philo->has_right_fork = 1;
-        print_status(philo, "has taken a fork");
-    }
-    else
-    {
-        usleep(1000);
-        if (!is_dead(philo->table))
-        {
-            pthread_mutex_lock(philo->right_fork);
-            philo->has_right_fork = 1;
-            print_status(philo, "has taken a fork");
-            if (is_dead(philo->table))
-            {
-                drop_forks(philo);
-                return;
-            }
-            pthread_mutex_lock(philo->left_fork);
-            philo->has_left_fork = 1;
-            print_status(philo, "has taken a fork");
-        }
-    }
+	pthread_mutex_unlock(&table->meal_lock);
 }
 
-void eat(t_philo *philo)
+static int	check_philosopher_status(t_table *table, int i, int *finished)
 {
-	print_status(philo, "is eating");
-	pthread_mutex_lock(&philo->table->meal_lock);
-	philo->last_meal = get_time();
-	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->table->meal_lock);
-	usleep(philo->table->time_to_eat * 1000);
+	long	time;
+	long	last_meal;
+
+	pthread_mutex_lock(&table->meal_lock);
+	last_meal = table->philos[i].last_meal;
+	time = get_time();
+	if (time - last_meal >= table->time_to_die)
+	{
+		print_status(&table->philos[i], "died");
+		set_dead(table);
+		pthread_mutex_unlock(&table->meal_lock);
+		return (1);
+	}
+	if (table->meal_goal > 0
+		&& table->philos[i].meals_eaten >= table->meal_goal)
+		(*finished)++;
+	pthread_mutex_unlock(&table->meal_lock);
+	return (0);
 }
 
-
-void sleep_philo(t_philo *philo)
+static void	join_threads(t_table *table)
 {
-	print_status(philo, "is sleeping");
-	usleep(philo->table->time_to_sleep * 1000);
+	int	i;
+
+	i = 0;
+	while (i < table->number_of_philosophers)
+	{
+		pthread_join(table->philos[i].thread, NULL);
+		i++;
+	}
 }
 
-void *life_cycle(void *arg)
+static int	monitor_philosophers(t_table *table)
 {
-    t_philo *philo = (t_philo *)arg;
-    
-    philo->has_left_fork = 0;
-    philo->has_right_fork = 0;
-    
-	if (philo->id % 2 == 0)
-		usleep(200); // Çift numaralılar biraz beklesin
-	if (philo->table->number_of_philosophers == 1)
+	int	i;
+	int	finished;
+
+	while (!get_dead_flag(table))
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-		usleep(philo->table->time_to_die * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		print_status(philo, "died");
-		return (NULL);
+		i = 0;
+		finished = 0;
+		while (i < table->number_of_philosophers)
+		{
+			if (check_philosopher_status(table, i, &finished))
+				return (1);
+			i++;
+		}
+		if (table->meal_goal > 0 && finished == table->number_of_philosophers)
+		{
+			set_dead(table);
+			break ;
+		}
+		usleep(1000);
 	}
-	while (!is_dead(philo->table))
-	{
-    	print_status(philo, "is thinking");
-		take_forks(philo);
-		eat(philo);
-		drop_forks(philo);
-		sleep_philo(philo);
-		print_status(philo, "is thinking");
-	}
-	return (NULL);
+	return (0);
 }
 
 int	execute(t_table *table)
 {
-    int		i;
-    int		finished;
-    long	time;
-    long	last_meal;
+	int	i;
 
-    table->start_time = get_time();
-    pthread_mutex_lock(&table->meal_lock);
-    i = 0;
-    while (i < table->number_of_philosophers)
-    {
-        table->philos[i].last_meal = table->start_time;
-        i++;
-    }
-    pthread_mutex_unlock(&table->meal_lock);
-
-    i = 0;
-    while (i < table->number_of_philosophers)
-    {
-        pthread_create(&table->philos[i].thread, NULL, life_cycle, &table->philos[i]);
-        i++;
-    }
-    usleep(100);
-
-    while (!get_dead_flag(table))
-    {
-        i = 0;
-        finished = 0;
-        while (i < table->number_of_philosophers)
-        {
-            pthread_mutex_lock(&table->meal_lock);
-            last_meal = table->philos[i].last_meal;
-            time = get_time();
-            if (time - last_meal >= table->time_to_die)
-            {
-                print_status(&table->philos[i], "died");
-                set_dead(table);
-                pthread_mutex_unlock(&table->meal_lock);
-                break;
-            }
-            if (table->meal_goal > 0 && table->philos[i].meals_eaten >= table->meal_goal)
-                finished++;
-            pthread_mutex_unlock(&table->meal_lock);
-            i++;
-        }
-        if (table->meal_goal > 0 && finished == table->number_of_philosophers)
-        {
-            set_dead(table);
-            break;
-        }
-        usleep(1000);
-    }
-    i = 0;
-    while (i < table->number_of_philosophers)
-    {
-        pthread_join(table->philos[i].thread, NULL);
-        i++;
-    }
-    return (0);
+	i = 0;
+	init_philosophers(table);
+	while (i < table->number_of_philosophers)
+	{
+		pthread_create(&table->philos[i].thread, NULL, life_cycle,
+			&table->philos[i]);
+		i++;
+	}
+	usleep(100);
+	monitor_philosophers(table);
+	join_threads(table);
+	return (0);
 }

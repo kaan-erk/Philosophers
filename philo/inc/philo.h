@@ -6,21 +6,22 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:33:08 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 19:40:15 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:28:14 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <sys/time.h>
+# include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-typedef struct	s_table
+typedef struct s_table
 {
 	int				number_of_philosophers;
 	long			time_to_die;
@@ -34,34 +35,37 @@ typedef struct	s_table
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philos;
-}				t_table;
+}					t_table;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				meals_eaten;
 	long			last_meal;
-	int has_left_fork;
-    int has_right_fork;
+	int				has_left_fork;
+	int				has_right_fork;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_table			*table;
-}				t_philo;
+}					t_philo;
 
-//utils utils.c
-void		ft_putendl_fd(char *s, int fd);
-int			ft_isalpha(int a);
-long long	ft_atoll(const char *str);
-void		print_status(t_philo *philo, char *msg);
-long		get_time(void);
-//parse parse.c
-int				parse(char **av, t_table *table);
-//execute execute.c
-int			execute(t_table *table);
-//execute execute_utils.c
-int			get_dead_flag(t_table *table);
-int			is_dead(t_table *table);
-void		set_dead(t_table *table);
+// utils utils.c
+void				ft_putendl_fd(char *s, int fd);
+int					ft_isdigit(int a);
+long long			ft_atoll(const char *str);
+void				print_status(t_philo *philo, char *msg);
+long				get_time(void);
+// parse parse.c
+int					parse(char **av, t_table *table);
+// execute execute.c
+int					execute(t_table *table);
+// execute execute_utils.c
+int					get_dead_flag(t_table *table);
+int					is_dead(t_table *table);
+void				sleep_philo(t_philo *philo);
+void				eat(t_philo *philo);
+void				*life_cycle(void *arg);
+void				set_dead(t_table *table);
 
 #endif

@@ -11,7 +11,8 @@ UTILS =	utils/utils.c
 PARSE = parse/parse.c
 
 EXECUTE =	execute/execute.c \
-			execute/execute_utils.c
+			execute/execute_utils.c \
+			execute/life_cycle.c
 
 SRCS =	$(UTILS) \
 		$(PARSE) \
