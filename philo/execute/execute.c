@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 20:25:30 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 20:34:06 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:16:20 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,12 @@ int	execute(t_table *table)
 		i++;
 	}
 	usleep(100);
-	monitor_philosophers(table);
+	
+	if (monitor_philosophers(table) == 1)
+	{
+		set_dead(table);
+		return (1);
+	}
 	join_threads(table);
 	return (0);
 }

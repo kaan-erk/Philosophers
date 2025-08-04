@@ -6,7 +6,7 @@
 /*   By: ktoraman < ktoraman@student.42istanbul.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 20:27:35 by ktoraman          #+#    #+#             */
-/*   Updated: 2025/08/04 20:43:04 by ktoraman         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:14:22 by ktoraman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	*life_cycle(void *arg)
 	philo->has_right_fork = 0;
 	if (philo->id % 2 == 0)
 		usleep(200);
-	if (philo->table->number_of_philosophers == 1)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-		usleep(philo->table->time_to_die * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		return (print_status(philo, "died"), NULL);
-	}
+	// if (philo->table->number_of_philosophers == 1)
+	// {
+	// 	pthread_mutex_lock(philo->left_fork);
+	// 	print_status(philo, "has taken a fork");
+	// 	usleep(philo->table->time_to_die * 1000);
+	// 	pthread_mutex_unlock(philo->left_fork);
+	// 	return (print_status(philo, "died"), NULL);
+	// }
 	while (!is_dead(philo->table))
 	{
 		take_forks(philo);
