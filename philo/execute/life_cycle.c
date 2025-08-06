@@ -76,14 +76,14 @@ void	*life_cycle(void *arg)
 	philo->has_right_fork = 0;
 	if (philo->id % 2 == 0)
 		usleep(200);
-	// if (philo->table->number_of_philosophers == 1)
-	// {
-	// 	pthread_mutex_lock(philo->left_fork);
-	// 	print_status(philo, "has taken a fork");
-	// 	usleep(philo->table->time_to_die * 1000);
-	// 	pthread_mutex_unlock(philo->left_fork);
-	// 	return (print_status(philo, "died"), NULL);
-	// }
+	if (philo->table->number_of_philosophers == 1)
+	{
+	 	pthread_mutex_lock(philo->left_fork);
+	 	print_status(philo, "has taken a fork");
+	 	usleep(philo->table->time_to_die * 1000);
+	 	pthread_mutex_unlock(philo->left_fork);
+		return (print_status(philo, "died"), NULL);
+	}
 	while (!is_dead(philo->table))
 	{
 		take_forks(philo);

@@ -81,7 +81,7 @@ static int	monitor_philosophers(t_table *table)
 			set_dead(table);
 			break ;
 		}
-		usleep(1000);
+		usleep(100);
 	}
 	return (0);
 }
@@ -99,12 +99,7 @@ int	execute(t_table *table)
 		i++;
 	}
 	usleep(100);
-	
-	if (monitor_philosophers(table) == 1)
-	{
-		set_dead(table);
-		return (1);
-	}
+	monitor_philosophers(table);
 	join_threads(table);
 	return (0);
 }
